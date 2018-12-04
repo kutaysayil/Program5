@@ -37,4 +37,4 @@ ivt	.FILL x0180
 kbsrloc	.FILL xFE00
 intenable	.FILL x4000
 buffer  .FILL x4600
-		.END
+		.END  ;ends
