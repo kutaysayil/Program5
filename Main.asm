@@ -18,6 +18,7 @@
 	LD R0, intenable
 	STI R0, kbsrloc
 	
+	AND R3, R3, #0	;clear counter r3
 	AND R1,R1,#0
 	STI R1,buffer
 
@@ -28,9 +29,26 @@ loop
 	TRAP  x21
 	AND R1,R1,#0
 	STI R1,buffer
+	ADD R3, R3, -1
+	BRn TrueA
+	;BRz TrueU
+	;BRp TrueG
+	BRnzp loop
+
+
+
+TrueA 
+	LD R2, lettermA
+	ADD R2, R0, R2	;tests to see if equal to A
+	BRnp #2
+	AND R3, R3, #0
+	ADD R3, R3, #1	;change R3 to one
 	BRnzp loop
 	TRAP x25
 
+lettermA	.FILL -65
+lettermG	.FILL -71
+lettermU	.FILL -85
 pointer	.FILL x4000
 intrloc	.FILL x2600
 ivt	.FILL x0180
