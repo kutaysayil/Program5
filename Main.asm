@@ -19,20 +19,20 @@
 	STI R0, kbsrloc
 	
 	AND R3, R3, #0	;clear counter r3
-	AND R1,R1,#0
-	STI R1,buffer
+	AND R1, R1, #0
+	STI R1, buffer
 
 ; start of actual program
 loop
 	LDI   R0,buffer
 	BRz   loop
 	TRAP  x21
-	AND R1,R1,#0
-	STI R1,buffer
+	AND R1, R1, #0
+	STI R1, buffer
 	ADD R3, R3, -1
 	BRn TrueA
 	BRz TrueU
-	;BRp TrueG
+	BRp TrueG
 	BRnzp loop
 
 
@@ -53,15 +53,24 @@ TrueU
 	ADD R3, R3, #2	;change R3 to two
 	BRnzp loop
 
+TrueG 
+	LD R2, lettermG
+	ADD R2, R0, R2	;tests to see if equal to A
+	BRnp #2
+	AND R3, R3, #0
+	ADD R3, R3, #3	;change R3 to one
+	TRAP x25
+	BRnzp loop
+
 	TRAP x25
 
 lettermA	.FILL -65
 lettermG	.FILL -71
 lettermU	.FILL -85
-pointer	.FILL x4000
-intrloc	.FILL x2600
-ivt	.FILL x0180
-kbsrloc	.FILL xFE00
+pointer		.FILL x4000
+intrloc		.FILL x2600
+ivt		.FILL x0180
+kbsrloc		.FILL xFE00
 intenable	.FILL x4000
-buffer  .FILL x4600
+buffer  	.FILL x4600
 		.END  ;ends
