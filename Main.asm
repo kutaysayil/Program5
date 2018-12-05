@@ -24,7 +24,7 @@
 
 ; start of actual program
 loop
-	LDI   R0,buffer
+	LDI   R0, buffer
 	BRz   loop
 	TRAP  x21
 	AND R1, R1, #0
@@ -55,12 +55,27 @@ TrueU
 
 TrueG 
 	LD R2, lettermG
-	ADD R2, R0, R2	;tests to see if equal to A
-	BRnp #2
+	ADD R2, R0, R2	;tests to see if equal to G
+	BRnp #4
 	AND R3, R3, #0
-	ADD R3, R3, #3	;change R3 to one
-	TRAP x25
+	LD R0, bar
+	TRAP x21   	;prints character to console
+	BRnzp part2
 	BRnzp loop
+
+
+
+part2	
+
+	LDI   R0, buffer
+	BRz   loop
+	TRAP  x21
+	AND R1, R1, #0
+	STI R1, buffer
+
+
+
+
 
 	TRAP x25
 
@@ -73,4 +88,5 @@ ivt		.FILL x0180
 kbsrloc		.FILL xFE00
 intenable	.FILL x4000
 buffer  	.FILL x4600
-		.END  ;ends
+bar		.FILL 124
+		.END  
