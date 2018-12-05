@@ -18,6 +18,7 @@
 	LD R0, intenable
 	STI R0, kbsrloc
 	
+	AND R4, R4, #0	;clears R4
 	AND R3, R3, #0	;clear counter r3
 	AND R1, R1, #0
 	STI R1, buffer
@@ -72,12 +73,53 @@ part2
 	TRAP  x21
 	AND R1, R1, #0
 	STI R1, buffer
+	ADD R3, R3, -1
+	BRn TrueU2
+	BRz TrueAG
+	ADD R4, R4, #-1
+	BRz test3A	;takes branch if A
+	BRnzp test3G	;takes branch if G
+	BRnzp loop
 
 
+TrueU2
+	LD R2, lettermU
+	ADD R2, R0, R2	;tests to see if equal to U
+	BRnp #2
+	AND R3, R3, #0
+	ADD R3, R3, #1	;change R3 to one
+	BRnzp part2
 
+TrueAG
+	LD R2, lettermA
+	ADD R2, R0, R2	;tests to see if equal to A
+	BRz secondA
+	LD R2, lettermG
+	ADD R2, R0, R2	;tests to see if equal to G
+	BRz secondG
+	BRnzp part2
 
+secondA		;if equal to A
+	AND R4, R4, #0
+	ADD R4, R4, #1	;R4 equal 1
+	AND R3, R3, #0
+	ADD R3, R3, #2	;change R3 to two
+	BRnzp part2
+
+secondG		;if equal to G
+	AND R4, R4, #0
+	ADD R4, R4, #2	;R4 equal 2
+	AND R3, R3, #0
+	ADD R3, R3, #2	;change R3 to two
+	BRnzp part2
+
+test3A
+	BR #0
+	
+test3G
 
 	TRAP x25
+
 
 lettermA	.FILL -65
 lettermG	.FILL -71
