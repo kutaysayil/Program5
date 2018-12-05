@@ -31,7 +31,7 @@ loop
 	STI R1,buffer
 	ADD R3, R3, -1
 	BRn TrueA
-	;BRz TrueU
+	BRz TrueU
 	;BRp TrueG
 	BRnzp loop
 
@@ -44,6 +44,15 @@ TrueA
 	AND R3, R3, #0
 	ADD R3, R3, #1	;change R3 to one
 	BRnzp loop
+
+TrueU
+	LD R2, lettermU
+	ADD R2, R0, R2	;tests to see if equal to U
+	BRnp #2
+	AND R3, R3, #0
+	ADD R3, R3, #2	;change R3 to two
+	BRnzp loop
+
 	TRAP x25
 
 lettermA	.FILL -65
