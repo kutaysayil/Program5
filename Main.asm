@@ -114,11 +114,46 @@ secondG		;if equal to G
 	BRnzp part2
 
 test3A
-	BR #0
+	LD R2, lettermA   ;checking if A
+	ADD R2, R0, R2
+	BRz finish
 	
-test3G
+	LD R2, lettermG   ;checking if G
+	ADD R2, R0, R2
+	BRz finish
+	
+	LD R2, lettermU   ;checking if U
+	ADD R2, R0, R2
+	BRz holdu
 
-	TRAP x25
+	AND R3, R3, #0
+		
+	
+holdu	BRnzp part2
+	
+
+test3G	
+
+	LD R2, lettermA   ;checking if A
+	ADD R2, R0, R2
+	BRz finish
+	
+	
+	LD R2, lettermU	  ;checking if U
+	ADD R2, R0, R2
+	BRz holdu
+
+	AND R3, R3, #0
+	BRnzp part2
+
+
+
+finish
+
+
+	
+
+	TRAP x25 
 
 
 lettermA	.FILL -65
