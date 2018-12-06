@@ -49,7 +49,7 @@ TrueA
 TrueU
 	LD R2, lettermU
 	ADD R2, R0, R2	;tests to see if equal to U
-	BRnp #2
+	BRnp TrueA
 	AND R3, R3, #0
 	ADD R3, R3, #2	;change R3 to two
 	BRnzp loop
@@ -57,7 +57,7 @@ TrueU
 TrueG 
 	LD R2, lettermG
 	ADD R2, R0, R2	;tests to see if equal to G
-	BRnp #4
+	BRnp TrueA
 	AND R3, R3, #0
 	LD R0, bar
 	TRAP x21   	;prints character to console
@@ -69,7 +69,7 @@ TrueG
 part2	
 
 	LDI   R0, buffer
-	BRz   loop
+	BRz   part2
 	TRAP  x21
 	AND R1, R1, #0
 	STI R1, buffer
@@ -79,7 +79,6 @@ part2
 	ADD R4, R4, #-1
 	BRz test3A	;takes branch if A
 	BRnzp test3G	;takes branch if G
-	BRnzp loop
 
 
 TrueU2
@@ -146,12 +145,8 @@ test3G
 	AND R3, R3, #0
 	BRnzp part2
 
-
-
 finish
 
-
-	
 
 	TRAP x25 
 
