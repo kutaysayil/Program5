@@ -34,7 +34,7 @@ loop
 	BRn TrueA
 	BRz TrueU
 	BRp TrueG
-	BRnzp loop
+	BRnzp loop    ;if previously unbranched, loop back
 
 
 
@@ -128,7 +128,7 @@ test3A
 	AND R3, R3, #0
 		
 	
-holdu	BRnzp part2
+holdu	BRnzp part2   ;go to part2
 	
 
 test3G	
